@@ -74,8 +74,14 @@ app.use(messageRoutes)
 app.use(errorHandler)
 
 // run API on designated port (4741 in this case)
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log('listening on port ' + port)
+})
+
+const io = require('socket.io')(server)
+
+io.on('connect', socket => {
+  socket.emit('connection', 'You\'ve been connected')
 })
 
 // needed for testing

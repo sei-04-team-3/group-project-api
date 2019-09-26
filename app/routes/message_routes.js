@@ -64,7 +64,6 @@ router.post('/messages', requireToken, (req, res, next) => {
   req.body.message.owner = req.user.id
 
   Message.create(req.body.message)
-    .populate('owner')
     // respond to succesful `create` with status 201 and JSON of new "message"
     .then(message => {
       res.status(201).json({ message: message.toObject() })

@@ -83,7 +83,7 @@ const io = require('socket.io')(server)
 app.set('socketio', io)
 
 io.on('connect', socket => {
-  socket.emit('connection', 'You\'ve been connected')
+  socket.emit('connection', 'Connected to socket server')
 })
 
 // needed for testing

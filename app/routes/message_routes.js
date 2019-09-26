@@ -29,7 +29,7 @@ const router = express.Router()
 
 // INDEX
 // GET /messages
-router.get('/messages', requireToken, (req, res, next) => {
+router.get('/messages', (req, res, next) => {
   Message.find()
     .populate('owner')
     .then(messages => {
@@ -62,10 +62,10 @@ router.get('/messages/:id', requireToken, (req, res, next) => {
 router.post('/messages', requireToken, (req, res, next) => {
   // set owner of new message to be current user
   req.body.message.owner = req.user.id
-
   Message.create(req.body.message)
     // respond to succesful `create` with status 201 and JSON of new "message"
     .then(message => {
+      req.app.get('socketio').emit('message emit', { message: message.toObject() })
       res.status(201).json({ message: message.toObject() })
     })
     // if an error occurs, pass it off to our error handler

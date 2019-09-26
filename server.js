@@ -80,6 +80,8 @@ const server = app.listen(port, () => {
 
 const io = require('socket.io')(server)
 
+app.set('socketio', io)
+
 io.on('connect', socket => {
   socket.emit('connection', 'You\'ve been connected')
 })

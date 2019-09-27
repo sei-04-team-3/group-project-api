@@ -18,7 +18,7 @@ MongoDB
 Mongoose
 Socket.io
 Heroku
-Git & Github for Version Control
+Git & Github for Version Control￼
 
 Future Iterations:
 -Make multiple Chat rooms/ create Chatroom resources

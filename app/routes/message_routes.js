@@ -100,19 +100,30 @@ router.patch('/messages/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 // DELETE /messages/5a7db6c74d55bc51bdf39793
 router.delete('/messages/:id', requireToken, (req, res, next) => {
-  Message.findById(req.params.id)
-    .then(handle404)
-    .then(message => {
-      // throw an error if current user doesn't own `message`
-      requireOwnership(req, message)
-      req.app.get('socketio').emit('message emit')
-      // delete the message ONLY IF the above didn't throw
-      message.deleteOne()
-    })
-    // send back 204 and no content if the deletion succeeded
-    .then(() => res.sendStatus(204))
-    // if an error occurs, pass it to the handler
-    .catch(next)
+  if (req.user.role === 'admin') {
+    Message.findById(req.params.id)
+      .then(handle404)
+      .then(message => {
+        req.app.get('socketio').emit('message emit')
+        message.deleteOne()
+      })
+      .then(() => res.sendStatus(204))
+      .catch(next)
+  } else {
+    Message.findById(req.params.id)
+      .then(handle404)
+      .then(message => {
+        // throw an error if current user doesn't own `message`
+        requireOwnership(req, message)
+        req.app.get('socketio').emit('message emit')
+        // delete the message ONLY IF the above didn't throw
+        message.deleteOne()
+      })
+      // send back 204 and no content if the deletion succeeded
+      .then(() => res.sendStatus(204))
+      // if an error occurs, pass it to the handler
+      .catch(next)
+  }
 })
 
 module.exports = router

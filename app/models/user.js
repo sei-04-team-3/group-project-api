@@ -11,7 +11,10 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   token: String,
-  role: 'member'
+  role: {
+    type: String,
+    default: 'member'
+  }
 }, {
   timestamps: true,
   toObject: {

@@ -3,11 +3,13 @@ Repos & Deployed Sites:
 Front-End:
 
 Repo: https://github.com/sei-04-team-3/group-project-client
+Deployed Site: https://sei-04-team-3.github.io/group-project-client/
 
 
 Back-End:
 
 Repo: https://github.com/sei-04-team-3/group-project-api
+Deployed: 'https://floating-lowlands-13889.herokuapp.com'
 
 This is the back-end to an application that is an instant messaging platform. It stores user authentication material and connects with a MongoDB database. It also stores messages and has socket.io software that allows instantaneous messaging on the front-end.
 
